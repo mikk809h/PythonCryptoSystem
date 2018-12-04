@@ -8,8 +8,7 @@ while True:  # Sørger for at man bliver sendt tilbage til menuen (loop)
 			# Herunder oprettes en menu, med 4 valgmuligheder
 			print("===[ Menu ]===")
 			print("1: Registrér")
-			print("2: Login (Kræver Handshake)")
-			print("3: Handshake")
+			print("2: Login")
 			print("q: Afslut")
 			print("")
 			choice = input("Please make a choice: ") # Få input fra brugeren
@@ -20,8 +19,6 @@ while True:  # Sørger for at man bliver sendt tilbage til menuen (loop)
 				if Options.client_id == None: # Hvis klienten ikke har fået et ID
 					Options.Handshake() # Anmod om nyt ID
 				Options.Login()
-			elif choice == "3":
-				Options.Handshake()
 			elif choice == "q":
 				break
 			else: # Hvis der vælges en menu som ikke eksisterer
@@ -36,12 +33,13 @@ while True:  # Sørger for at man bliver sendt tilbage til menuen (loop)
 			print("")
 			choice = input("Valg: ") # Få input fra brugeren
 
+			# Menu
 			if choice == "1":
 				break
 			elif choice == "2":
 				break
 			elif choice == "3":
-				break				
+				break
 			elif choice == "q":
 				break
 			else: # Hvis der vælges en menu som ikke eksisterer

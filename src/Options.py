@@ -13,6 +13,9 @@ logged_in = False
 # Forbind til socket med adresse og port
 server_address = ('localhost', 88)
 
+'''
+Forbind og opret socket
+'''
 def CreateSocket():
 	# Opret TCP/IP socket
 	global sock # Reference til den globale socket
@@ -24,6 +27,9 @@ def CreateSocket():
 		sock = None
 		print(e)
 
+'''
+Registrering
+'''
 def Register():
 	username = input("Enter username: ")
 	password = getpass.getpass("Enter password: ")
@@ -57,7 +63,9 @@ def Register():
 			print('closing socket')
 			sock.close()
 
-
+'''
+Login
+'''
 def Login():
 	global logged_in
 	username = input("Enter username: ")
@@ -99,6 +107,16 @@ def Login():
 			print('closing socket')
 			sock.close()
 
+'''
+Log ud
+'''
+def Logout():
+	
+	return
+
+'''
+Handshake
+'''
 def Handshake():
 	try:
 		CreateSocket()
@@ -120,7 +138,7 @@ def Handshake():
 		data = sock.recv(512)
 		data = json.loads(data)
 		if data["request"] == "handshake":
-			print("Modtog ID: " + data["uuid"])
+			#print("Modtog ID: " + data["uuid"])
 			global client_id
 			client_id = data["uuid"]
 		#Debug.tprint(data)

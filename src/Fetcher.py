@@ -15,7 +15,7 @@ from Helpers import Database
 	bchusd, bcheur, bchbtc
 '''
 
-# Variables
+# Variabler
 currency_pair = "ehtusd"
 url = "https://www.bitstamp.net/api/v2/ticker/ethusd/"
 page = ""
@@ -30,7 +30,7 @@ def insert(data):
 
 starttime=time.time()
 while True:
-	Debug.tprint("Sending request")
+	Debug.tprint("Sender forespørgsel")
 	with urllib.request.urlopen(req) as response: # Åbner resultatet af "req"
 		page = response.read() # Scriptet læser den modtagne data og lagrer det i "page"
 
@@ -38,5 +38,5 @@ while True:
 	Debug.tprint(data)
 
 	insert(data)
-	Debug.tprint("Waiting...")
+	Debug.tprint("Venter...")
 	time.sleep(30.0 - ((time.time() - starttime) % 30.0)) # Her sættes en timer på 30 sek. igang og så sender den endnu en request

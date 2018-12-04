@@ -23,7 +23,7 @@ def query(database, query, args):
 									   user=hostDataMikkel["user"],
 									   password=hostDataMikkel["password"])
 		if conn.is_connected():
-			print('Connected to MySQL database')
+			print('Forbundet til MySQL database')
 
 			cursor = conn.cursor()
 			cursor.execute(query, args)
@@ -32,7 +32,6 @@ def query(database, query, args):
 				print('last insert id', cursor.lastrowid)
 				return True
 			else:
-				print("Selection: ")
 				user = cursor.fetchall()
 				return len(user)
 
