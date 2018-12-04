@@ -7,6 +7,11 @@ import os
 import hashlib
 from Helpers import Debug
 
+'''
+Markerede linje: (225)
+Tag datoer og tid fra input og konvertér til timestamp
+'''
+
 # Nuværende socket
 sock = None
 
@@ -168,18 +173,58 @@ def GetLatestValue():
 
 '''
 GetClosestValueToTimestamp
+
+input: 	dd/mm/yyyy hh:mm
+		04/12/2018 21:12
 '''
+
+
 def GetClosestValueToTimestamp():
-	try:
-		year = int(input("Indtast årstal: "))
-		month = int(input("Indtast måned: "))
-		day = int(input("Indtast dag: "))
-		hour = int(input("Indtast tidspunkt (time): "))
-		minutes = int(input("Indtast tidspunkt (minutter): "))
-		timestamp = datetime.datetime(year, month, day, hour, minutes).timestamp()
+	#date = input("Skriv tidspunktet (dd/mm/yyyy hh:mm): ")
+		
+	# Splitter strengen indtil 2018
+	date = "04/12/2018 21:12"
+	print(date)
 	
+	# Splitter strengen indtil 2018
+	newdate = date.split('/')
+
+	# newdate = [ "dd", "mm", "yyyy hh:mm" ]
+	day, month = newdate[0], newdate[1]
+
+	# Deler newdate op: [ "yyyy", "hh:mm" ]
+	year = newdate[2].split(' ')
+	# year = [ "2018", "21:12" ]
+
+	# Tiden deles i "year"-variablen [ "hh", "mm" ]
+	hours, minutes = year[1].split(':')
+	# hours, minutes = "hh", "mm"
+
+	year = year[0]
+	# year = "yyyy"
+	
+
+	# Indsæt data i variabler og omdan til tal
+	try:
+		day = int(day)
+		month = int(month)
+		year = int(year)
+		hours = int(hours)
+		minutes = int(minutes)
 	except:
-		return None
+		print("Dato ugyldig")
+		return
+		
+	print("Day:    ", day)
+	print("Month:  ", month)
+	print("Year:   ", year)
+	print("Hours:  ", hours)
+	print("Minutes:", minutes)
+
+	print("Oneliner: ", day, month, year, hours, minutes)
+
+	timestamp = datetime.datetime(day, month, year, hours, minutes).timestamp()
+
 	
 	try:
 		CreateSocket()
@@ -248,5 +293,5 @@ def Handshake():
 
 	# "finally" kører efter "try" eller "except" er blevet executed
 	finally:
-		print('closing wrappedSocketet')
+		print('Closing socket')
 		sock.close()
