@@ -69,7 +69,7 @@ while True:
 					# Validér ID
 					if data["uuid"]:
 						if not handshakes[data["uuid"]]:
-							query = 'SELECT * FROM users WHERE username="' + data["username"] + '" AND password="' + hashlib.sha256(data["password"].encode()).hexdigest() + '"'
+							query = 'SELECT * FROM users WHERE username="' + data["username"] + '" AND password="' + data["password"] + '"'
 							print(query)
 
 							# How many users match these credentials
@@ -92,7 +92,7 @@ while True:
 					}
 
 					# Registrér bruger
-					query = 'INSERT INTO users(username, password) VALUES ("' + data["username"] + '", "' + hashlib.sha256(data["password"].encode()).hexdigest() + '")'
+					query = 'INSERT INTO users(username, password) VALUES ("' + data["username"] + '", "' + data["password"] + '")'
 					print(query)
 
 					Database.query("crypto", query, None)

@@ -1,14 +1,18 @@
 import json
 import socket
+import ssl
 import getpass
 import datetime
 import os
+import hashlib
 from Helpers import Debug
 
 # Nuværende socket
 sock = None
+
 # Handshake id
 client_id = None
+
 # Er klienten logget ind?
 logged_in = False
 
@@ -46,7 +50,7 @@ def Register():
 			"request": "register",
 			"uuid": client_id,
 			"username": username,
-			"password": password
+			"password": hashlib.sha256(password.encode()).hexdigest()
 		}
 
 		# Konvertér til en string
@@ -85,7 +89,7 @@ def Login():
 			"request": "login",
 			"uuid": client_id,
 			"username": username,
-			"password": password
+			"password": hashlib.sha256(password.encode()).hexdigest()
 		}
 		# Konvertér til en streng
 		data = json.dumps(data)
@@ -103,6 +107,9 @@ def Login():
 		if data["request"] == "response":
 			if data["response"] == "success":
 				logged_in = True
+
+			elif data["response"] == "failed":
+				print("Login fejlede, brugernavn eller kodeord forkert!")
 
 
 	# "finally" kører efter "try" eller "except" er blevet executed
@@ -163,12 +170,16 @@ def GetLatestValue():
 GetClosestValueToTimestamp
 '''
 def GetClosestValueToTimestamp():
-	year = int(input("Indtast årstal: "))
-	month = int(input("Indtast måned: "))
-	day = int(input("Indtast dag: "))
-	hour = int(input("Indtast tidspunkt (time): "))
-	minutes = int(input("Indtast tidspunkt (minutter): "))
-	timestamp = datetime.datetime(year, month, day, hour, minutes).timestamp()
+	try:
+		year = int(input("Indtast årstal: "))
+		month = int(input("Indtast måned: "))
+		day = int(input("Indtast dag: "))
+		hour = int(input("Indtast tidspunkt (time): "))
+		minutes = int(input("Indtast tidspunkt (minutter): "))
+		timestamp = datetime.datetime(year, month, day, hour, minutes).timestamp()
+	
+	except:
+		return None
 	
 	try:
 		CreateSocket()
@@ -197,6 +208,7 @@ def GetClosestValueToTimestamp():
 		Debug.tprint(data)
 		data = json.loads(data)
 		print('Daværende værdi: $%.2f' % data["value"])
+
 
 	# Kører efter "try" eller "except" er executed
 	finally:
@@ -236,5 +248,5 @@ def Handshake():
 
 	# "finally" kører efter "try" eller "except" er blevet executed
 	finally:
-		print('closing socket')
+		print('closing wrappedSocketet')
 		sock.close()
