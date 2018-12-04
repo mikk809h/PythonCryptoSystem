@@ -43,6 +43,7 @@ while True:
 
 				# Login / Register
 				data = json.loads(data)
+
 				if data["request"] == "handshake":
 					print("handshake")
 
@@ -57,6 +58,7 @@ while True:
 
 					# Debug print the list of handshakes
 					Debug.tprint(handshakes)
+
 				elif data["request"] == "login":
 					print("Login")
 					response_data = {
@@ -72,7 +74,7 @@ while True:
 
 							# How many users match these credentials
 							users = Database.query("crypto", query, None)
-							if users == 1:
+							if len(users) == 1:
 								print("Logged in")
 								handshakes[data["uuid"]] = True  # Sæt uuid til True (Logget ind)
 								response_data["response"] = "success"
@@ -81,6 +83,7 @@ while True:
 						print("Unspecified ID")
 
 					Response.reply(connection, response_data)
+
 				elif data["request"] == "register":
 					print("Register")
 					response_data = {
@@ -94,6 +97,48 @@ while True:
 
 					Database.query("crypto", query, None)
 					Response.reply(connection, response_data)
+					
+				elif data["request"] == "latestValue":
+					print("Fetching latest value")
+					response_data = {
+						"request": "response",
+						"response": "success",
+						"value": None,
+					}
+					selectedCurrencyPair = "btcusd"
+					if data["type"] == "ethusd":
+						selectedCurrencyPair = "ethusd"
+					
+					# Get latest value
+					query = 'SELECT value FROM %s ORDER BY timestamp DESC LIMIT 1' % selectedCurrencyPair
+					print(query) # Debug
+
+					response_data["value"] = Database.query("crypto", query, None)[0][0]
+
+					print(response_data["value"])
+					Response.reply(connection, response_data)
+
+				elif data["request"] == "timestampedValue":
+					
+					print("Fetching values closest to your specified timestamp")
+					response_data = {
+						"request": "response",
+						"response": "success",
+						"value": None,
+					}
+					selectedCurrencyPair = "btcusd"
+					if data["type"] == "ethusd":
+						selectedCurrencyPair = "ethusd"
+					
+					# Timestamp
+					query = 'SELECT value FROM %s ORDER BY ABS(timestamp - %s) LIMIT 1' % (selectedCurrencyPair, data["timestamp"])
+					print(query) # Debug
+
+					response_data["value"] = Database.query("crypto", query, None)[0][0]
+					
+					print(response_data["value"])
+					Response.reply(connection, response_data)
+
 				else:
 					print("Unknown request: " + data["request"])
 

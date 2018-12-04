@@ -33,7 +33,7 @@ def query(database, query, args):
 				return True
 			else:
 				user = cursor.fetchall()
-				return len(user)
+				return user
 
 	except Error as e:
 		print(e)

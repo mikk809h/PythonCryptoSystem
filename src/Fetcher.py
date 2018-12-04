@@ -39,4 +39,4 @@ while True:
 
 	insert(data)
 	Debug.tprint("Venter...")
-	time.sleep(30.0 - ((time.time() - starttime) % 30.0)) # Her sættes en timer på 30 sek. igang og så sender den endnu en request
+	time.sleep(60.0 - ((time.time() - starttime) % 60.0)) # Her sættes en timer på 30 sek. igang og så sender den endnu en request

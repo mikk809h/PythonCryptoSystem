@@ -27,7 +27,7 @@ while True:  # Sørger for at man bliver sendt tilbage til menuen (loop)
 			# Herunder oprettes en menu, med 3 valgmuligheder
 			print("===[ Menu (Logget ind) ]===")
 			print("1: Anmod om ETH værdi")
-			print("2: Anmod om ETH værdi på et angivet tidspunkt")
+			print("2: Anmod om ETH værdi på et angivet tidspunkt") #SVÆR
 			print("3: Log ud")
 			print("q: Afslut")
 			print("")
@@ -35,11 +35,11 @@ while True:  # Sørger for at man bliver sendt tilbage til menuen (loop)
 
 			# Menu
 			if choice == "1":
-				break
+				Options.GetLatestValue()
 			elif choice == "2":
-				break
+				Options.GetClosestValueToTimestamp()
 			elif choice == "3":
-				break
+				Options.Logout()
 			elif choice == "q":
 				break
 			else: # Hvis der vælges en menu som ikke eksisterer
@@ -47,3 +47,4 @@ while True:  # Sørger for at man bliver sendt tilbage til menuen (loop)
 	except KeyboardInterrupt:
 		print('All done')
 		break
+	

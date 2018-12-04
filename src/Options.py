@@ -1,6 +1,8 @@
 import json
 import socket
 import getpass
+import datetime
+import os
 from Helpers import Debug
 
 # Nuværende socket
@@ -38,6 +40,7 @@ def Register():
 		CreateSocket()
 		if not sock:
 			return None
+
 		# Definér json object
 		data = {
 			"request": "register",
@@ -46,8 +49,9 @@ def Register():
 			"password": password
 		}
 
-		# Konvertér til en streng
+		# Konvertér til en string
 		data = json.dumps(data)
+		
 		# Omdan til en byte string
 		data = data.encode()
 		
@@ -111,7 +115,94 @@ def Login():
 Log ud
 '''
 def Logout():
+	global logged_in
+	os.system('cls')
+	logged_in = False
+
+	return
+
+'''
+GetLatestValue
+'''
+def GetLatestValue():
+	try:
+		CreateSocket()
+		if not sock:
+			return None
+
+		# Definér json object
+		data = {
+			"request": "latestValue",
+			"uuid": client_id,
+			"type": "ethusd"
+		}
+
+		# Konvertér til en string
+		data = json.dumps(data)
+
+		# Omdan til en byte string
+		data = data.encode()
+		
+		# Send data
+		sock.sendall(data)
+		
+		# Modtag data
+		data = sock.recv(512)
+		Debug.tprint(data)
+		data = json.loads(data)
+		print('Nuværende værdi: $%.2f' % data["value"])
+
+	# Kører efter "try" eller "except" er executed
+	finally:
+		if sock:
+			print('closing socket')
+			sock.close()
+	return
+
+'''
+GetClosestValueToTimestamp
+'''
+def GetClosestValueToTimestamp():
+	year = int(input("Indtast årstal: "))
+	month = int(input("Indtast måned: "))
+	day = int(input("Indtast dag: "))
+	hour = int(input("Indtast tidspunkt (time): "))
+	minutes = int(input("Indtast tidspunkt (minutter): "))
+	timestamp = datetime.datetime(year, month, day, hour, minutes).timestamp()
 	
+	try:
+		CreateSocket()
+		if not sock:
+			return None
+			
+		# Definér json object
+		data = {
+			"request": "timestampedValue",
+			"uuid": client_id,
+			"type": "ethusd",
+			"timestamp": timestamp
+		}
+
+		# Konvertér til en string
+		data = json.dumps(data)
+
+		# Omdan til en byte string
+		data = data.encode()
+		
+		# Send data
+		sock.sendall(data)
+		
+		# Modtag data
+		data = sock.recv(512)
+		Debug.tprint(data)
+		data = json.loads(data)
+		print('Daværende værdi: $%.2f' % data["value"])
+
+	# Kører efter "try" eller "except" er executed
+	finally:
+		if sock:
+			print('closing socket')
+			sock.close()
 	return
 
 '''
