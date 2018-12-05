@@ -1,3 +1,24 @@
+'''
+o Hvordan fungerer klienten?
+	Den opretter forbindelse til den lyttende server
+	Og sender herefter dine valg fra menuen videre til serveren
+	Og modtager så den data vi har bedt om, hvis dette er muligt
+
+o Hvilke muligheder giver den brugeren?
+	Når du åbner klienten får du valgmuligheder, hvor du kan registrere dig, logge ind eller stoppe programmet
+	Når du så er logget ind kan du:
+	Få seneste værdi af en ETH
+	Indtaste et tidspunkt og få værdien fra den dag
+	Logge ud
+	Lukke programmet
+
+o Hvilken data kan man få fra serveren?
+	Nuværende ETH værdi
+	Værdien fra et bestemt tidspunkt
+	Og et handshake (sessions ID til klienten)
+'''
+
+
 import Options
 
 # Nuværende menuvalg
@@ -27,7 +48,7 @@ while True:  # Sørger for at man bliver sendt tilbage til menuen (loop)
 			# Herunder oprettes en menu, med 3 valgmuligheder
 			print("===[ Menu (Logget ind) ]===")
 			print("1: Anmod om ETH værdi")
-			print("2: Anmod om ETH værdi på et angivet tidspunkt") #SVÆR
+			print("2: Anmod om ETH værdi på et angivet tidspunkt")
 			print("3: Log ud")
 			print("q: Afslut")
 			print("")

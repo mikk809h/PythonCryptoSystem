@@ -1,3 +1,24 @@
+'''
+o Hvilken data sendes til databasen? Og for hvilke(n) valuta(er)?
+	Den data som sendes er den data som der "fetches" via den API.
+	Valutaerne er Ethereum i USD (Kan nemt opsættes til Bitcoin i USD)
+
+o Nævn et eksempel på en SQL kommando I bruger i scriptet
+	INSERT INTO ethusd(value,high,low,vwap,volume,bid,ask,timestamp,open)
+
+o Hvilken protokol anvendes til at kommunikere med Bitstamp?
+	HTTP
+
+o Er kommunikationen med Bitstamp krypteret?
+	Definér krypteret, for siden kører med SSL certifikat (https), så umiddelbart, ja.
+
+o Hvilken request method bruges?
+	GET request
+
+o Hvordan håndteres response?
+	Fetcheren ved at det er et JSON object den får og kan herefter parse det og tilgå de enkelte variabler der er i.
+'''
+
 # API : https://www.bitstamp.net/api/v2/ticker/ethusd/
 
 import urllib.request

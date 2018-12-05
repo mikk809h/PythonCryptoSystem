@@ -1,8 +1,20 @@
 '''
-Login giver success
-Registrér det på db
-Få adgang til data fra db
-lav en "logged in" menu
+o Nævn et eksempel på en SQL kommando I bruger i scriptet
+	SELECT value FROM %s ORDER BY ABS(timestamp - %s) LIMIT 1' % (selectedCurrencyPair, data["timestamp"])
+
+o Er det relevant at kryptere kommunikationen med databasen? Har I implementeret det?
+	Da databasen kører på server computeren, er dette ikke relevant, da kommunikationen er lokal
+
+o Hvilken protokol bruges til at kommunikere med klienten?
+	Protockollen er en TCP
+
+o Er det relevant at kryptere kommunikationen med klienten? Har I implementeret det?
+	Både og, for da den eneste "følsomme" information vi har med at gøre er et password, som er hashed,
+	kan man diskutere vigtigheden bag sikkerheden, men det er vel altid godt at have krypterede forbindelser, når de skal kommunikere på netværket og ikke bare på samme pc.
+
+o Hvordan gemmes brugerens oplysninger (brugernavn og kode) i databasen?
+	Brugernavn bliver gemt som plain text
+	Password bliver gemt som hash
 '''
 import socket
 import json
