@@ -111,11 +111,11 @@ while True:
 					
 					# Get latest value
 					query = 'SELECT value FROM %s ORDER BY timestamp DESC LIMIT 1' % selectedCurrencyPair
-					print(query) # Debug
+					# print(query) # Debug
 
 					response_data["value"] = Database.query("crypto", query, None)[0][0]
 
-					print(response_data["value"])
+					print(response_data)
 					Response.reply(connection, response_data)
 
 				elif data["request"] == "timestampedValue":
@@ -132,11 +132,11 @@ while True:
 					
 					# Timestamp
 					query = 'SELECT value FROM %s ORDER BY ABS(timestamp - %s) LIMIT 1' % (selectedCurrencyPair, data["timestamp"])
-					print(query) # Debug
+					# print(query) # Debug
 
 					response_data["value"] = Database.query("crypto", query, None)[0][0]
 					
-					print(response_data["value"])
+					print(response_data)
 					Response.reply(connection, response_data)
 
 				else:

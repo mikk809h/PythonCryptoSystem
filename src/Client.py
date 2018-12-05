@@ -1,7 +1,5 @@
 import Options
 
-Options.GetClosestValueToTimestamp()
-
 # Nuværende menuvalg
 choice = '0'
 while True:  # Sørger for at man bliver sendt tilbage til menuen (loop)

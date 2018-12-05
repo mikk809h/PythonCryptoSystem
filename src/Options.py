@@ -30,7 +30,9 @@ Forbind og opret socket
 def CreateSocket():
 	# Opret TCP/IP socket
 	global sock # Reference til den globale socket
+	print("")
 	print('Forbinder til %s på port %s' % server_address)
+	print("")
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # Laver en socket
 	try:
 		sock.connect(server_address) # Forbinder til serveren gennem socket
@@ -69,11 +71,12 @@ def Register():
 		
 		# Modtag data
 		data = sock.recv(512)
-		Debug.tprint(data)
+		# Debug.tprint(data)
+		
 	# Kører efter "try" eller "except" er executed
 	finally:
 		if sock:
-			print('closing socket')
+			# print('closing socket')
 			sock.close()
 
 '''
@@ -107,7 +110,7 @@ def Login():
 
 		# Tjekker for svar fra serveren
 		data = sock.recv(512)
-		Debug.tprint(data)
+		# Debug.tprint(data)
 		data = json.loads(data)
 		if data["request"] == "response":
 			if data["response"] == "success":
@@ -120,7 +123,7 @@ def Login():
 	# "finally" kører efter "try" eller "except" er blevet executed
 	finally:
 		if sock:
-			print('closing socket')
+			# print('closing socket')
 			sock.close()
 
 '''
@@ -160,14 +163,15 @@ def GetLatestValue():
 		
 		# Modtag data
 		data = sock.recv(512)
-		Debug.tprint(data)
+		# Debug.tprint(data)
 		data = json.loads(data)
 		print('Nuværende værdi: $%.2f' % data["value"])
+		print("")
 
 	# Kører efter "try" eller "except" er executed
 	finally:
 		if sock:
-			print('closing socket')
+			# print('closing socket')
 			sock.close()
 	return
 
@@ -180,11 +184,7 @@ input: 	dd/mm/yyyy hh:mm
 
 
 def GetClosestValueToTimestamp():
-	#date = input("Skriv tidspunktet (dd/mm/yyyy hh:mm): ")
-		
-	# Splitter strengen indtil 2018
-	date = "04/12/2018 21:12"
-	print(date)
+	date = input("Skriv tidspunktet (dd/mm/yyyy hh:mm): ")
 	
 	# Splitter strengen indtil 2018
 	newdate = date.split('/')
@@ -214,17 +214,8 @@ def GetClosestValueToTimestamp():
 	except:
 		print("Dato ugyldig")
 		return
-		
-	print("Day:    ", day)
-	print("Month:  ", month)
-	print("Year:   ", year)
-	print("Hours:  ", hours)
-	print("Minutes:", minutes)
 
-	print("Oneliner: ", day, month, year, hours, minutes)
-
-	timestamp = datetime.datetime(day, month, year, hours, minutes).timestamp()
-
+	timestamp = datetime.datetime(year, month, day, hours, minutes).timestamp()
 	
 	try:
 		CreateSocket()
@@ -250,15 +241,15 @@ def GetClosestValueToTimestamp():
 		
 		# Modtag data
 		data = sock.recv(512)
-		Debug.tprint(data)
+		# Debug.tprint(data)
 		data = json.loads(data)
 		print('Daværende værdi: $%.2f' % data["value"])
-
+		print("")
 
 	# Kører efter "try" eller "except" er executed
 	finally:
 		if sock:
-			print('closing socket')
+			# print('closing socket')
 			sock.close()
 	return
 
@@ -293,5 +284,5 @@ def Handshake():
 
 	# "finally" kører efter "try" eller "except" er blevet executed
 	finally:
-		print('Closing socket')
+		# print('closing socket')
 		sock.close()
